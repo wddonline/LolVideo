@@ -1,13 +1,10 @@
 package org.wdd.app.android.lolvideo.ui.hot.presenter;
 
-import android.util.SparseArray;
-
 import org.wdd.app.android.lolvideo.ui.base.ActivityFragmentAvaliable;
 import org.wdd.app.android.lolvideo.ui.base.BasePresenter;
 import org.wdd.app.android.lolvideo.ui.hot.data.HotVideoDataGetter;
 import org.wdd.app.android.lolvideo.ui.hot.fragment.HotVideoFragment;
-import org.wdd.app.android.lolvideo.ui.main.model.HtmlHref;
-import org.wdd.app.android.lolvideo.ui.main.model.VideoItem;
+import org.wdd.app.android.lolvideo.ui.hot.model.HotCategory;
 
 import java.util.List;
 
@@ -35,8 +32,12 @@ public class HotVideoPresenter implements BasePresenter, HotVideoDataGetter.Data
     }
 
     @Override
-    public void onRequestOk(List<String> titiles, List<HtmlHref> mores, SparseArray<List<VideoItem>> hots) {
-        mView.showHotVideoView(titiles, mores, hots);
+    public void onRequestOk(List<HotCategory> cates) {
+        if (cates.size() == 0) {
+            mView.showNotDataViews();
+            return;
+        }
+        mView.showHotVideoView(cates);
     }
 
     @Override

@@ -5,11 +5,15 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import org.wdd.app.android.lolvideo.R;
 import org.wdd.app.android.lolvideo.ui.base.AbstractCommonAdapter;
-import org.wdd.app.android.lolvideo.ui.main.model.VideoItem;
+import org.wdd.app.android.lolvideo.ui.hot.model.HotCategory;
+import org.wdd.app.android.lolvideo.utils.AppUtils;
+import org.wdd.app.android.lolvideo.views.NetworkImageView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -24,14 +28,25 @@ public class HotVideoAdapter extends AbstractCommonAdapter<HotVideoAdapter.HotIt
     private final int TYPE_VIDEO = 3;
 
     private LayoutInflater mInflater;
+    private int mItemWidth;
+    private int mItemHeight;
 
-    public HotVideoAdapter(Context context, List<HotItem> data) {
-        super(context, data);
+    public HotVideoAdapter(Context context) {
+        super(context);
         mInflater = LayoutInflater.from(context);
-        refreshData(data);
+        int margin = context.getResources().getDimensionPixelSize(R.dimen.activity_horizontal_margin);
+        mItemWidth = (int) ((AppUtils.getScreenWidth(context) - margin * 3) / 2f);
+        mItemHeight = (int) (mItemWidth * 0.7f);
     }
 
-    public void refreshData(List<HotItem> data) {
+    public void refreshData(List<HotCategory> cates) {
+        if (data == null) {
+            data = new ArrayList<>();
+        } else {
+            data.clear();
+        }
+
+
 
     }
 
@@ -109,60 +124,142 @@ public class HotVideoAdapter extends AbstractCommonAdapter<HotVideoAdapter.HotIt
 
     private class HeaderViewHolder extends RecyclerView.ViewHolder {
 
+        TextView titleView;
+        View clickView;
+
         public HeaderViewHolder(View itemView) {
             super(itemView);
+            titleView = itemView.findViewById(R.id.item_hot_video_header_title);
+            clickView = itemView.findViewById(R.id.item_hot_video_header_more);
         }
 
         public void bindData(HotItem item) {
+            final VideoItem video = item.data.get(0);
+            titleView.setText(video.title);
+            clickView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
 
+                }
+            });
         }
 
     }
 
     private class HotNewsViewHolder extends RecyclerView.ViewHolder {
 
+        View clickView;
+        NetworkImageView imageView;
+        TextView titleView;
+        TextView descView;
+
         public HotNewsViewHolder(View itemView) {
             super(itemView);
-        }
-
-        public void bindViews() {
-
+            clickView = itemView.findViewById(R.id.item_hot_video_hot_news_click);
+            imageView = itemView.findViewById(R.id.item_hot_video_hot_news_img);
+            titleView = itemView.findViewById(R.id.item_hot_video_hot_news_title);
+            descView = itemView.findViewById(R.id.item_hot_video_hot_news_desc);
         }
 
         public void bindData(HotItem item) {
+            final VideoItem video = item.data.get(0);
+            imageView.setImageUrl(video.img);
+            titleView.setText(video.title);
+            descView.setText(video.desc);
+            clickView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
 
+                }
+            });
         }
 
     }
 
     private class NormalNewsViewHolder extends RecyclerView.ViewHolder {
 
+        View clickView;
+        TextView titleView;
+        TextView dateView;
+
         public NormalNewsViewHolder(View itemView) {
             super(itemView);
-        }
-
-        public void bindViews() {
-
+            clickView = itemView.findViewById(R.id.item_hot_video_normal_news_click);
+            titleView = itemView.findViewById(R.id.item_hot_video_normal_news_title);
+            dateView = itemView.findViewById(R.id.item_hot_video_normal_news_date);
         }
 
         public void bindData(HotItem item) {
+            final VideoItem video = item.data.get(0);
+            titleView.setText(video.title);
+            dateView.setText(video.date);
+            clickView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
 
+                }
+            });
         }
 
     }
 
     private class VideoViewHolder extends RecyclerView.ViewHolder {
 
+        View[] clickViews;
+        NetworkImageView[] imageViews;
+        TextView[] titleViews;
+        TextView[] dateViews;
+
         public VideoViewHolder(View itemView) {
             super(itemView);
-        }
+            clickViews = new View[2];
+            imageViews = new NetworkImageView[2];
+            titleViews = new TextView[2];
+            dateViews = new TextView[2];
 
-        public void bindViews() {
+            clickViews[0] = itemView.findViewById(R.id.item_hot_video_video_click1);
+            imageViews[0] = itemView.findViewById(R.id.item_hot_video_video_img1);
+            titleViews[0] = itemView.findViewById(R.id.item_hot_video_video_name1);
+            dateViews[0] = itemView.findViewById(R.id.item_hot_video_video_date1);
 
+            clickViews[1] = itemView.findViewById(R.id.item_hot_video_video_click2);
+            imageViews[1] = itemView.findViewById(R.id.item_hot_video_video_img2);
+            titleViews[1] = itemView.findViewById(R.id.item_hot_video_video_name2);
+            dateViews[1] = itemView.findViewById(R.id.item_hot_video_video_date2);
         }
 
         public void bindData(HotItem item) {
+            List<VideoItem> items = item.data;
 
+            VideoItem video = item.data.get(0);
+            imageViews[0].setImageUrl(video.img);
+            titleViews[0].setText(video.title);
+            dateViews[0].setText(video.desc);
+            clickViews[0].setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                }
+            });
+            imageViews[0].getLayoutParams().width = mItemWidth;
+            imageViews[0].getLayoutParams().height = mItemHeight;
+
+            if (items.size() > 1) {
+                clickViews[1].setVisibility(View.VISIBLE);
+                imageViews[1].setImageUrl(video.img);
+                titleViews[1].setText(video.title);
+                dateViews[1].setText(video.desc);
+                clickViews[1].setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                    }
+                });
+                imageViews[1].getLayoutParams().width = mItemWidth;
+                imageViews[1].getLayoutParams().height = mItemHeight;
+            } else {
+                clickViews[1].setVisibility(View.GONE);
+            }
         }
 
     }
