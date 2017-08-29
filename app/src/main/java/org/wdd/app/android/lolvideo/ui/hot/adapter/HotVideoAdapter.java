@@ -2,6 +2,7 @@ package org.wdd.app.android.lolvideo.ui.hot.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 import org.wdd.app.android.lolvideo.R;
 import org.wdd.app.android.lolvideo.ui.base.AbstractCommonAdapter;
 import org.wdd.app.android.lolvideo.ui.hot.model.HotCategory;
+import org.wdd.app.android.lolvideo.ui.hot.model.HotVideo;
 import org.wdd.app.android.lolvideo.utils.AppUtils;
 import org.wdd.app.android.lolvideo.views.NetworkImageView;
 
@@ -45,9 +47,55 @@ public class HotVideoAdapter extends AbstractCommonAdapter<HotVideoAdapter.HotIt
         } else {
             data.clear();
         }
+        HotItem item;
+        HotVideo video;
+        for (HotCategory cate : cates) {
+            if (cate.type == HotCategory.HotType.NEWS) {
+                item = new HotItem();
+                item.type = TYPE_HEADER;
+                item.data = new ArrayList<>();
+                video = new HotVideo();
+                video.url = cate.url;
+                video.title = cate.name;
+                item.data.add(video);
+                data.add(item);
 
+                for (HotVideo v : cate.data) {
+                    item = new HotItem();
+                    item.type = TextUtils.isEmpty(v.img) ? TYPE_NEWS_NORMAL : TYPE_NEWS_HOT;
+                    item.data = new ArrayList<>();
+                    item.data.add(v);
+                    data.add(item);
+                }
+            } else {
+                item = new HotItem();
+                item.type = TYPE_HEADER;
+                item.data = new ArrayList<>();
+                video = new HotVideo();
+                video.url = cate.url;
+                video.title = cate.name;
+                item.data.add(video);
+                data.add(item);
 
-
+                int count = cate.data.size() / 2;
+                for (int i = 0; i < count; i++) {
+                    item = new HotItem();
+                    item.type = TYPE_VIDEO;
+                    item.data = new ArrayList<>();
+                    item.data.add(cate.data.get(i));
+                    item.data.add(cate.data.get(i + 1));
+                    data.add(item);
+                }
+                if (cate.data.size() % 2 != 0) {
+                    item = new HotItem();
+                    item.type = TYPE_VIDEO;
+                    item.data = new ArrayList<>();
+                    item.data.add(cate.data.get(cate.data.size() - 1));
+                    data.add(item);
+                }
+            }
+        }
+        notifyItemChanged(0, data.size());
     }
 
     @Override
@@ -119,7 +167,7 @@ public class HotVideoAdapter extends AbstractCommonAdapter<HotVideoAdapter.HotIt
 
     class HotItem {
         int type;
-        List<VideoItem> data;
+        List<HotVideo> data;
     }
 
     private class HeaderViewHolder extends RecyclerView.ViewHolder {
@@ -134,7 +182,7 @@ public class HotVideoAdapter extends AbstractCommonAdapter<HotVideoAdapter.HotIt
         }
 
         public void bindData(HotItem item) {
-            final VideoItem video = item.data.get(0);
+            final HotVideo video = item.data.get(0);
             titleView.setText(video.title);
             clickView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -162,7 +210,7 @@ public class HotVideoAdapter extends AbstractCommonAdapter<HotVideoAdapter.HotIt
         }
 
         public void bindData(HotItem item) {
-            final VideoItem video = item.data.get(0);
+            final HotVideo video = item.data.get(0);
             imageView.setImageUrl(video.img);
             titleView.setText(video.title);
             descView.setText(video.desc);
@@ -190,7 +238,7 @@ public class HotVideoAdapter extends AbstractCommonAdapter<HotVideoAdapter.HotIt
         }
 
         public void bindData(HotItem item) {
-            final VideoItem video = item.data.get(0);
+            final HotVideo video = item.data.get(0);
             titleView.setText(video.title);
             dateView.setText(video.date);
             clickView.setOnClickListener(new View.OnClickListener() {
@@ -229,12 +277,12 @@ public class HotVideoAdapter extends AbstractCommonAdapter<HotVideoAdapter.HotIt
         }
 
         public void bindData(HotItem item) {
-            List<VideoItem> items = item.data;
+            List<HotVideo> items = item.data;
 
-            VideoItem video = item.data.get(0);
+            HotVideo video = item.data.get(0);
             imageViews[0].setImageUrl(video.img);
             titleViews[0].setText(video.title);
-            dateViews[0].setText(video.desc);
+            dateViews[0].setText(video.date);
             clickViews[0].setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -248,7 +296,7 @@ public class HotVideoAdapter extends AbstractCommonAdapter<HotVideoAdapter.HotIt
                 clickViews[1].setVisibility(View.VISIBLE);
                 imageViews[1].setImageUrl(video.img);
                 titleViews[1].setText(video.title);
-                dateViews[1].setText(video.desc);
+                dateViews[1].setText(video.date);
                 clickViews[1].setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {

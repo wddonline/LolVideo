@@ -53,54 +53,60 @@ public class HotVideoDataGetter {
             @Override
             public void onRequestOk(HttpResponseEntry res) {
                 Document document = (Document) res.getData();
-                List<HotCategory> cates = null;
+                List<HotCategory> cates = new ArrayList<>();
 
                 Elements nodes;
                 Element node;
                 HotCategory category;
                 HotVideo video;
                 Elements titleNodes;
+                Element titleNode;
+                Element aNode;
+                Elements itemsNodes;
+                Element itemsNode;
+                Elements videoNodes;
+                Element videoNode;
 
                 nodes = document.getElementsByAttributeValue("class", "news_item");
                 if (nodes.size() > 0) {
                     node = nodes.first();
                     titleNodes = node.getElementsByAttributeValue("class", "item_title");
                     if (titleNodes.size() > 0) {
-                        Element titleNode = titleNodes.first();
+                        titleNode = titleNodes.first();
                         category = new HotCategory();
                         category.type = HotCategory.HotType.NEWS;
                         category.name = titleNode.getElementsByTag("h3").first().text();
                         category.url = titleNode.getElementsByTag("a").first().attr("href");
 
-                        Elements itemsNodes = node.getElementsByAttributeValue("class", "item_list");
+                        itemsNodes = node.getElementsByAttributeValue("class", "item_list");
                         if (itemsNodes.size() > 0) {
                             category.data = new ArrayList<>();
-                            Element itemsNode = itemsNodes.first();
-                            Elements newsNodes = itemsNode.getElementsByAttributeValue("class", "hot");
-                            if (newsNodes.size() > 0) {
-                                Element newsNode = newsNodes.first();
+                            itemsNode = itemsNodes.first();
+                            videoNodes = itemsNode.getElementsByAttributeValue("class", "hot");
+                            if (videoNodes.size() > 0) {
+                                videoNode = videoNodes.first();
                                 video = new HotVideo();
-                                video.img = newsNode.getElementsByTag("img").first().attr("src");
-                                Element aNode = newsNode.getElementsByTag("a").last();
+                                video.img = videoNode.getElementsByTag("img").first().attr("src");
+                                aNode = videoNode.getElementsByTag("a").last();
                                 video.url = aNode.attr("href");
                                 video.title = aNode.getElementsByTag("h3").first().text();
                                 video.desc = aNode.getElementsByTag("p").first().text();
                                 category.data.add(video);
 
-                                newsNodes = itemsNode.getElementsByTag("li");
-                                if (newsNodes.size() > 0) {
+                                videoNodes = itemsNode.getElementsByTag("li");
+                                if (videoNodes.size() > 0) {
                                     String content;
-                                    for (int i = 0; i < newsNodes.size(); i++) {
-                                        newsNode = newsNodes.get(i);
+                                    for (int i = 0; i < videoNodes.size(); i++) {
+                                        videoNode = videoNodes.get(i);
                                         video = new HotVideo();
-                                        aNode = newsNode.getElementsByTag("a").first();
+                                        aNode = videoNode.getElementsByTag("a").first();
                                         video.url = aNode.attr("href");
                                         content = aNode.html();
                                         if (content.contains("<span>")) {
-                                            video.title = content;
-                                        } else {
                                             video.title = content.substring(0, content.indexOf("<span>"));
-                                            video.date = content.substring(content.indexOf("<span>") + 6);
+                                            video.date = content.substring(content.indexOf("<span>") + 6, content.indexOf("</span>"));
+                                        } else {
+                                            video.title = content;
                                         }
                                         category.data.add(video);
                                     }
@@ -111,46 +117,39 @@ public class HotVideoDataGetter {
                     }
 
                 }
-/*
-				<div class="item_list">
-					<ul>
-					<li>
-							<a href="/201708/53018.html">
-								<div class="pic">
-									<img src="http://www.lolshipin.com/uploads/allimg/170825/28-1FR50952310-L.jpg"  alt="Miss排位日记：中单暴力丽桑卓！无解双控冰封全局！"">
-									<span>2017-08-25</span>
-								</div>
-								<div class="text">
-									<p>Miss排位日记：中单暴力丽桑卓！无解双控冰封全局！</p>
-								</div>
-							</a>
-						</li>
 
- */
                 nodes = document.getElementsByAttributeValue("class", "video_item");
                 if (nodes.size() > 0) {
                     for (int i = 0; i < nodes.size(); i++) {
                         node = nodes.get(i);
                         titleNodes = node.getElementsByAttributeValue("class", "item_title");
                         if (titleNodes.size() > 0) {
-                            Element titleNode = titleNodes.first();
+                            titleNode = titleNodes.first();
                             category = new HotCategory();
                             category.type = HotCategory.HotType.VIDEO;
                             category.name = titleNode.getElementsByTag("h3").first().text();
                             category.url = titleNode.getElementsByTag("a").first().attr("href");
 
-                            Elements itemsNodes = node.getElementsByAttributeValue("class", "item_list");
+                            itemsNodes = node.getElementsByAttributeValue("class", "item_list");
                             if (itemsNodes.size() > 0) {
-                                category.data = new ArrayList<>();
-                                Element itemsNode = itemsNodes.first();
-                                Elements newsNodes = itemsNode.getElementsByAttributeValue("class", "hot");
-
+                                videoNodes = itemsNodes.first().getElementsByTag("li");
+                                if (videoNodes.size() > 0) {
+                                    category.data = new ArrayList<>();
+                                    for (int j = 0; j < videoNodes.size(); j++) {
+                                        videoNode = videoNodes.get(j);
+                                        video = new HotVideo();
+                                        video.url = videoNode.getElementsByTag("a").first().attr("href");
+                                        video.img = videoNode.getElementsByTag("img").first().attr("src");
+                                        video.date = videoNode.getElementsByTag("span").first().text();
+                                        video.title = videoNode.getElementsByTag("p").first().text();
+                                        category.data.add(video);
+                                    }
+                                }
                             }
                             cates.add(category);
                         }
                     }
                 }
-
                 mCallback.onRequestOk(cates);
             }
 

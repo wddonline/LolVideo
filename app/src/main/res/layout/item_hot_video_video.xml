@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:background="@color/white">
 
     <LinearLayout
         android:id="@+id/item_hot_video_video_click1"
@@ -10,27 +11,37 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:clickable="true"
-        android:background="@drawable/common_list_item_bg"
+        android:paddingBottom="6dp"
+        android:background="@drawable/ripple_bg"
         android:paddingLeft="@dimen/activity_horizontal_margin">
 
         <org.wdd.app.android.lolvideo.views.NetworkImageView
             android:id="@+id/item_hot_video_video_img1"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:scaleType="centerCrop"/>
 
         <TextView
             android:id="@+id/item_hot_video_video_name1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/colorItemTitle"
-            android:textSize="@dimen/textSizeItemTitle"/>
+            android:textColor="@color/colorItemContent"
+            android:textSize="@dimen/textSizeItemContent"
+            android:lines="2"
+            android:ellipsize="end"
+            android:paddingLeft="6dp"
+            android:paddingRight="6dp"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp"/>
 
         <TextView
             android:id="@+id/item_hot_video_video_date1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/colorItemContent"
-            android:textSize="@dimen/textSizeItemContent"/>
+            android:textColor="@color/colorItemExtra"
+            android:textSize="@dimen/textSizeItemExtra"
+            android:paddingLeft="6dp"
+            android:paddingRight="6dp" />
 
     </LinearLayout>
 
@@ -40,28 +51,38 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:clickable="true"
-        android:background="@drawable/common_list_item_bg"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:background="@drawable/ripple_bg"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:paddingBottom="6dp"
         android:visibility="gone">
 
         <org.wdd.app.android.lolvideo.views.NetworkImageView
             android:id="@+id/item_hot_video_video_img2"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:scaleType="centerCrop"/>
 
         <TextView
             android:id="@+id/item_hot_video_video_name2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/colorItemTitle"
-            android:textSize="@dimen/textSizeItemTitle"/>
+            android:textColor="@color/colorItemContent"
+            android:textSize="@dimen/textSizeItemContent"
+            android:lines="2"
+            android:ellipsize="end"
+            android:paddingLeft="6dp"
+            android:paddingRight="6dp"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp"/>
 
         <TextView
             android:id="@+id/item_hot_video_video_date2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/colorItemContent"
-            android:textSize="@dimen/textSizeItemContent"/>
+            android:textColor="@color/colorItemExtra"
+            android:textSize="@dimen/textSizeItemExtra"
+            android:paddingLeft="6dp"
+            android:paddingRight="6dp"/>
 
     </LinearLayout>
 

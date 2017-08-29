@@ -5,17 +5,16 @@ import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import org.wdd.app.android.lolvideo.R;
+import org.wdd.app.android.lolvideo.ui.base.AbstractCommonAdapter;
 import org.wdd.app.android.lolvideo.ui.base.BaseFragment;
 import org.wdd.app.android.lolvideo.ui.hot.adapter.HotVideoAdapter;
 import org.wdd.app.android.lolvideo.ui.hot.model.HotCategory;
 import org.wdd.app.android.lolvideo.ui.hot.presenter.HotVideoPresenter;
-import org.wdd.app.android.lolvideo.ui.main.model.HtmlHref;
 import org.wdd.app.android.lolvideo.utils.AppToaster;
 import org.wdd.app.android.lolvideo.views.LineDividerDecoration;
 import org.wdd.app.android.lolvideo.views.LoadView;
@@ -61,7 +60,7 @@ public class HotVideoFragment extends BaseFragment {
 
         LinearLayoutManager manager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(manager);
-        LineDividerDecoration decoration = new LineDividerDecoration(getContext(), LinearLayoutManager.VERTICAL, Color.parseColor("#eeeeee"));
+        LineDividerDecoration decoration = new LineDividerDecoration(getContext());
         int offset = getResources().getDimensionPixelSize(R.dimen.activity_horizontal_margin);
         decoration.setLeftOffset(offset);
         decoration.setRightOffset(offset);
@@ -89,7 +88,9 @@ public class HotVideoFragment extends BaseFragment {
             mAdapter = new HotVideoAdapter(getContext());
             mAdapter.refreshData(cates);
             mRecyclerView.setAdapter(mAdapter);
+            mAdapter.setLoadStatus(AbstractCommonAdapter.LoadStatus.NoMore);
         } else {
+            mRefreshLayout.setRefreshing(false);
             mAdapter.refreshData(cates);
         }
     }
@@ -98,6 +99,7 @@ public class HotVideoFragment extends BaseFragment {
         if (mAdapter == null) {
             mLoadView.setStatus(LoadView.LoadStatus.Request_Failure, error);
         } else {
+            mRefreshLayout.setRefreshing(false);
             AppToaster.show(error);
         }
     }
@@ -106,6 +108,7 @@ public class HotVideoFragment extends BaseFragment {
         if (mAdapter == null) {
             mLoadView.setStatus(LoadView.LoadStatus.Network_Error);
         } else {
+            mRefreshLayout.setRefreshing(false);
             AppToaster.show(R.string.no_connection_error);
         }
     }
@@ -114,6 +117,7 @@ public class HotVideoFragment extends BaseFragment {
         if (mAdapter == null) {
             mLoadView.setStatus(LoadView.LoadStatus.No_Data);
         } else {
+            mRefreshLayout.setRefreshing(false);
             AppToaster.show(R.string.no_data_error);
         }
     }

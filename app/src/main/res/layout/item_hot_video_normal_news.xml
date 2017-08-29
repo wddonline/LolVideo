@@ -23,10 +23,10 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:lines="3"
-        android:gravity="center"
+        android:lines="2"
+        android:gravity="center_vertical"
         android:ellipsize="end"
-        android:textSize="@dimen/textSizeItemTitle"
+        android:textSize="@dimen/textSizeItemContent"
         android:textColor="#333333"/>
 
     <TextView
@@ -34,5 +34,5 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
-        android:textSize="@dimen/textSizeItemContent"/>
+        android:textSize="@dimen/textSizeItemExtra"/>
 </LinearLayout>
