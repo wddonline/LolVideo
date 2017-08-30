@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:background="@color/white">
+    android:background="@color/white"
+    android:paddingTop="6dp">
 
     <LinearLayout
         android:id="@+id/item_hot_video_video_click1"

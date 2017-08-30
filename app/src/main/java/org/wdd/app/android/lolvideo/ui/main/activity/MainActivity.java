@@ -2,11 +2,9 @@ package org.wdd.app.android.lolvideo.ui.main.activity;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Handler;
 import android.support.v4.app.ActivityCompat;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TabWidget;
@@ -17,8 +15,10 @@ import com.umeng.analytics.MobclickAgent;
 import org.wdd.app.android.lolvideo.R;
 import org.wdd.app.android.lolvideo.app.LolApplication;
 import org.wdd.app.android.lolvideo.ui.base.BaseActivity;
+import org.wdd.app.android.lolvideo.ui.category.fragment.VideoCategoryFragment;
 import org.wdd.app.android.lolvideo.ui.hot.fragment.HotVideoFragment;
 import org.wdd.app.android.lolvideo.ui.main.presenter.MainPresenter;
+import org.wdd.app.android.lolvideo.ui.me.fragment.MeFragment;
 import org.wdd.app.android.lolvideo.utils.AppToaster;
 import org.wdd.app.android.lolvideo.utils.AppUtils;
 import org.wdd.app.android.lolvideo.views.FragmentTabHost;
@@ -47,14 +47,8 @@ public class MainActivity extends BaseActivity implements Runnable {
         AppUtils.setImmersiveStatusBar(this);
         MobclickAgent.openActivityDurationTrack(false);
         initData();
-        initTitles();
         initViews();
 //        BmobUtils.autoUpdateApp(this);
-    }
-
-    private void initTitles() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.activity_main_toolbar);
-        setSupportActionBar(toolbar);
     }
 
     private void initData() {
@@ -62,13 +56,6 @@ public class MainActivity extends BaseActivity implements Runnable {
     }
 
     private void initViews() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            int statusHeight = AppUtils.getStatusHeight(this);
-            View statusBar = findViewById(R.id.activity_main_statusbar);
-            statusBar.setVisibility(View.VISIBLE);
-            statusBar.getLayoutParams().height = statusHeight;
-        }
-
         mLoadView = (LoadView) findViewById(R.id.activity_main_loadview);
         mTabHost = (FragmentTabHost) findViewById(android.R.id.tabhost);
         mTabHost.setup(this, getSupportFragmentManager(), android.R.id.tabcontent);
@@ -89,10 +76,10 @@ public class MainActivity extends BaseActivity implements Runnable {
         String[] tabTags;
         Class[] tabClasses;
 
-        tabIcons = new int[]{R.drawable.ic_today_focus};
-        tabTxts = new int[]{R.string.today_focus};
-        tabTags = new String[]{"today_focus"};
-        tabClasses = new Class[]{HotVideoFragment.class};
+        tabIcons = new int[]{R.drawable.ic_today_focus, R.drawable.ic_category, R.drawable.ic_me};
+        tabTxts = new int[]{R.string.today_focus, R.string.category, R.string.me};
+        tabTags = new String[]{"today_focus", "category", "me"};
+        tabClasses = new Class[]{HotVideoFragment.class, VideoCategoryFragment.class, MeFragment.class};
 
         int tabCount = tabIcons.length;
 

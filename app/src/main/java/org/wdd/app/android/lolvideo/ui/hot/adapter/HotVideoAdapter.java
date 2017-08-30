@@ -82,8 +82,8 @@ public class HotVideoAdapter extends AbstractCommonAdapter<HotVideoAdapter.HotIt
                     item = new HotItem();
                     item.type = TYPE_VIDEO;
                     item.data = new ArrayList<>();
-                    item.data.add(cate.data.get(i));
-                    item.data.add(cate.data.get(i + 1));
+                    item.data.add(cate.data.get(i * 2));
+                    item.data.add(cate.data.get(i * 2 + 1));
                     data.add(item);
                 }
                 if (cate.data.size() % 2 != 0) {
@@ -293,6 +293,7 @@ public class HotVideoAdapter extends AbstractCommonAdapter<HotVideoAdapter.HotIt
             imageViews[0].getLayoutParams().height = mItemHeight;
 
             if (items.size() > 1) {
+                video = item.data.get(1);
                 clickViews[1].setVisibility(View.VISIBLE);
                 imageViews[1].setImageUrl(video.img);
                 titleViews[1].setText(video.title);

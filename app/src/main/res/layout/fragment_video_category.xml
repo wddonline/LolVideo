@@ -3,40 +3,36 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/white">
+    android:background="@color/white"
+    android:orientation="vertical">
 
     <View
-        android:id="@+id/fragment_hot_video_statusbar"
+        android:id="@+id/fragment_video_category_statusbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
-        android:visibility="gone"/>
+        android:visibility="gone" />
 
     <android.support.v7.widget.Toolbar
-        android:id="@+id/fragment_hot_video_toolbar"
+        android:id="@+id/fragment_video_category_toolbar"
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
         android:background="@color/colorPrimary"
         app:title="@string/app_name"
         app:titleTextColor="@color/white" />
 
-    <org.wdd.app.android.lolvideo.views.LoadView
-        android:id="@+id/fragment_hot_video_loadview"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/fragment_hot_video_refreshview"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone">
+        android:background="@color/white">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/fragment_hot_video_listview"
+        <LinearLayout
+            android:id="@+id/fragment_video_category_container"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-    </android.support.v4.widget.SwipeRefreshLayout>
+        </LinearLayout>
 
+    </ScrollView>
 </LinearLayout>

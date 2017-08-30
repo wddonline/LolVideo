@@ -1,6 +1,7 @@
 package org.wdd.app.android.lolvideo.ui.hot.fragment;
 
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -16,6 +17,7 @@ import org.wdd.app.android.lolvideo.ui.hot.adapter.HotVideoAdapter;
 import org.wdd.app.android.lolvideo.ui.hot.model.HotCategory;
 import org.wdd.app.android.lolvideo.ui.hot.presenter.HotVideoPresenter;
 import org.wdd.app.android.lolvideo.utils.AppToaster;
+import org.wdd.app.android.lolvideo.utils.AppUtils;
 import org.wdd.app.android.lolvideo.views.LineDividerDecoration;
 import org.wdd.app.android.lolvideo.views.LoadView;
 
@@ -54,6 +56,13 @@ public class HotVideoFragment extends BaseFragment {
     }
 
     private void initViews() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            int statusHeight = AppUtils.getStatusHeight(getActivity());
+            View statusBar = mRootView.findViewById(R.id.fragment_hot_video_statusbar);
+            statusBar.setVisibility(View.VISIBLE);
+            statusBar.getLayoutParams().height = statusHeight;
+        }
+
         mLoadView = mRootView.findViewById(R.id.fragment_hot_video_loadview);
         mRecyclerView = mRootView.findViewById(R.id.fragment_hot_video_listview);
         mRefreshLayout = mRootView.findViewById(R.id.fragment_hot_video_refreshview);

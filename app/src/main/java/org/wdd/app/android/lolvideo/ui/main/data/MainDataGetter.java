@@ -66,6 +66,7 @@ public class MainDataGetter {
                 List<HtmlHref> killers = null;
                 List<HtmlHref> matches = null;
                 List<HtmlHref> columns = null;
+                List<HtmlHref> news = null;
 
                 Elements nodes;
                 Element node;
@@ -89,6 +90,7 @@ public class MainDataGetter {
                     node = aNodes.get(i);
                     tools.add(new HtmlHref(node.text(), node.attr("href")));
                 }
+                cache.saveToolMenu(tools);
 
                 aNodes = nodes.get(1).getElementsByTag("a");
                 videoCategories = new ArrayList<>();
@@ -96,6 +98,7 @@ public class MainDataGetter {
                     node = aNodes.get(i);
                     videoCategories.add(new HtmlHref(node.text(), node.attr("href")));
                 }
+                cache.saveVideoCategories(videoCategories);
 
                 aNodes = nodes.get(2).getElementsByTag("a");
                 mumuSoles = new ArrayList<>();
@@ -103,6 +106,7 @@ public class MainDataGetter {
                     node = aNodes.get(i);
                     mumuSoles.add(new HtmlHref(node.text(), node.attr("href")));
                 }
+                cache.saveMumuSoles(mumuSoles);
 
                 aNodes = nodes.get(3).getElementsByTag("a");
                 commentaries = new ArrayList<>();
@@ -110,6 +114,7 @@ public class MainDataGetter {
                     node = aNodes.get(i);
                     commentaries.add(new HtmlHref(node.text(), node.attr("href")));
                 }
+                cache.saveCommentaries(commentaries);
 
                 aNodes = nodes.get(4).getElementsByTag("a");
                 killers = new ArrayList<>();
@@ -117,6 +122,7 @@ public class MainDataGetter {
                     node = aNodes.get(i);
                     killers.add(new HtmlHref(node.text(), node.attr("href")));
                 }
+                cache.saveKillers(killers);
 
                 aNodes = nodes.get(4).getElementsByTag("a");
                 matches = new ArrayList<>();
@@ -124,13 +130,23 @@ public class MainDataGetter {
                     node = aNodes.get(i);
                     matches.add(new HtmlHref(node.text(), node.attr("href")));
                 }
+                cache.saveMatches(matches);
 
-                aNodes = nodes.last().getElementsByTag("a");
+                aNodes = nodes.get(5).getElementsByTag("a");
                 columns = new ArrayList<>();
                 for (int i = 0; i < aNodes.size(); i++) {
                     node = aNodes.get(i);
                     columns.add(new HtmlHref(node.text(), node.attr("href")));
                 }
+                cache.saveColumns(columns);
+
+                aNodes = nodes.last().getElementsByTag("a");
+                news = new ArrayList<>();
+                for (int i = 0; i < aNodes.size(); i++) {
+                    node = aNodes.get(i);
+                    news.add(new HtmlHref(node.text(), node.attr("href")));
+                }
+                cache.saveNews(news);
 
                 cache.initMenu();
                 mCallback.onRequestOk();

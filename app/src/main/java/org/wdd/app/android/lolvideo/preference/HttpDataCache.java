@@ -26,6 +26,7 @@ public class HttpDataCache {
     private final String KEY_KILLERS_MENU = "key_killers_menu";
     private final String KEY_MATCHES_MENU = "key_matches_menu";
     private final String KEY_COLUMNS_MENU = "key_columns_menu";
+    private final String KEY_NEWS_MENU = "key_news_menu";
 
     private SharedPreferences mPref;
 
@@ -97,6 +98,14 @@ public class HttpDataCache {
 
     public List<HtmlHref> getColumns() {
         return read(KEY_COLUMNS_MENU);
+    }
+
+    public void saveNews(List<HtmlHref> hrefs) {
+        save(KEY_NEWS_MENU, hrefs);
+    }
+
+    public List<HtmlHref> getNews() {
+        return read(KEY_NEWS_MENU);
     }
 
     private void save(String key, List<HtmlHref> list) {

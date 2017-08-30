@@ -35,4 +35,27 @@
 
     <string name="today_focus">热点</string>
     <string name="more">更多</string>
+
+    <string name="category">分类</string>
+    <string name="news">资讯</string>
+    <string name="video_category">视频分类</string>
+    <string name="mumu_sole">木木独家</string>
+    <string name="commentary">解说</string>
+    <string name="killer">高手</string>
+    <string name="matches">比赛</string>
+    <string name="columns">栏目</string>
+
+    <string name="me">我的</string>
+    <string name="my_favorites">我的收藏</string>
+    <string name="my_download">我的下载</string>
+    <string name="fighting_capacity">战斗力</string>
+    <string name="hidden_points">隐藏分</string>
+    <string name="record_query">战绩查询</string>
+    <string name="old_almanac">老黄历</string>
+    <string name="compare">看看谁更强</string>
+    <string name="heroic_restraint">英雄克制</string>
+    <string name="version_update">版本更新</string>
+    <string name="cache_clean">缓存清理</string>
+    <string name="app_wall">应用推荐</string>
+    <string name="about">关于</string>
 </resources>
