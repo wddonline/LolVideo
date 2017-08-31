@@ -18,6 +18,7 @@ import org.wdd.app.android.lolvideo.ui.base.BaseActivity;
 import org.wdd.app.android.lolvideo.ui.category.fragment.VideoCategoryFragment;
 import org.wdd.app.android.lolvideo.ui.hot.fragment.HotVideoFragment;
 import org.wdd.app.android.lolvideo.ui.main.presenter.MainPresenter;
+import org.wdd.app.android.lolvideo.ui.matches.fragment.MatchesFragment;
 import org.wdd.app.android.lolvideo.ui.me.fragment.MeFragment;
 import org.wdd.app.android.lolvideo.utils.AppToaster;
 import org.wdd.app.android.lolvideo.utils.AppUtils;
@@ -76,10 +77,10 @@ public class MainActivity extends BaseActivity implements Runnable {
         String[] tabTags;
         Class[] tabClasses;
 
-        tabIcons = new int[]{R.drawable.ic_today_focus, R.drawable.ic_category, R.drawable.ic_me};
-        tabTxts = new int[]{R.string.today_focus, R.string.category, R.string.me};
-        tabTags = new String[]{"today_focus", "category", "me"};
-        tabClasses = new Class[]{HotVideoFragment.class, VideoCategoryFragment.class, MeFragment.class};
+        tabIcons = new int[]{R.drawable.ic_today_focus, R.drawable.ic_category, R.drawable.ic_matches, R.drawable.ic_me};
+        tabTxts = new int[]{R.string.today_focus, R.string.category, R.string.matches, R.string.me};
+        tabTags = new String[]{"today_focus", "category", "matches", "me"};
+        tabClasses = new Class[]{HotVideoFragment.class, VideoCategoryFragment.class, MatchesFragment.class, MeFragment.class};
 
         int tabCount = tabIcons.length;
 

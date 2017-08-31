@@ -4,7 +4,7 @@ package org.wdd.app.android.lolvideo.ui.hot.model;
  * Created by richard on 8/29/17.
  */
 
-public class HotVideo {
+public class Video {
 
     public String url;
     public String img;
@@ -12,6 +12,6 @@ public class HotVideo {
     public String title;
     public String desc;
 
-    public HotVideo() {
+    public Video() {
     }
 }

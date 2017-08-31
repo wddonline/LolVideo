@@ -53,7 +53,6 @@ public class MainDataGetter {
         }
         HttpRequestEntry requestEntry = new HttpRequestEntry();
         requestEntry.setMethod(HttpRequestEntry.Method.GET);
-        requestEntry.setShouldCached(true);
         requestEntry.setUrl(ServerApis.BASE_URL);
         mHttpManager.sendHtmlRequest("GB2312", host, requestEntry, new HttpConnectCallback() {
             @Override
@@ -124,7 +123,7 @@ public class MainDataGetter {
                 }
                 cache.saveKillers(killers);
 
-                aNodes = nodes.get(4).getElementsByTag("a");
+                aNodes = nodes.get(5).getElementsByTag("a");
                 matches = new ArrayList<>();
                 for (int i = 0; i < aNodes.size(); i++) {
                     node = aNodes.get(i);
@@ -132,7 +131,7 @@ public class MainDataGetter {
                 }
                 cache.saveMatches(matches);
 
-                aNodes = nodes.get(5).getElementsByTag("a");
+                aNodes = nodes.get(6).getElementsByTag("a");
                 columns = new ArrayList<>();
                 for (int i = 0; i < aNodes.size(); i++) {
                     node = aNodes.get(i);

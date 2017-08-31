@@ -14,7 +14,7 @@ import org.wdd.app.android.lolvideo.http.error.ErrorCode;
 import org.wdd.app.android.lolvideo.http.error.HttpError;
 import org.wdd.app.android.lolvideo.ui.base.ActivityFragmentAvaliable;
 import org.wdd.app.android.lolvideo.ui.hot.model.HotCategory;
-import org.wdd.app.android.lolvideo.ui.hot.model.HotVideo;
+import org.wdd.app.android.lolvideo.ui.hot.model.Video;
 import org.wdd.app.android.lolvideo.utils.HttpUtils;
 import org.wdd.app.android.lolvideo.utils.ServerApis;
 
@@ -46,19 +46,26 @@ public class HotVideoDataGetter {
     }
 
     public void requestHotVideo(final ActivityFragmentAvaliable host) {
+        if (mSession != null) {
+            mSession.cancelRequest();
+            mSession = null;
+        }
         HttpRequestEntry requestEntry = new HttpRequestEntry();
         requestEntry.setMethod(HttpRequestEntry.Method.GET);
         requestEntry.setUrl(ServerApis.BASE_URL);
+        requestEntry.setShouldCached(false);
         mHttpManager.sendHtmlRequest("GB2312", host, requestEntry, new HttpConnectCallback() {
             @Override
             public void onRequestOk(HttpResponseEntry res) {
+                mSession = null;
+
                 Document document = (Document) res.getData();
                 List<HotCategory> cates = new ArrayList<>();
 
                 Elements nodes;
                 Element node;
                 HotCategory category;
-                HotVideo video;
+                Video video;
                 Elements titleNodes;
                 Element titleNode;
                 Element aNode;
@@ -85,7 +92,7 @@ public class HotVideoDataGetter {
                             videoNodes = itemsNode.getElementsByAttributeValue("class", "hot");
                             if (videoNodes.size() > 0) {
                                 videoNode = videoNodes.first();
-                                video = new HotVideo();
+                                video = new Video();
                                 video.img = videoNode.getElementsByTag("img").first().attr("src");
                                 aNode = videoNode.getElementsByTag("a").last();
                                 video.url = aNode.attr("href");
@@ -98,7 +105,7 @@ public class HotVideoDataGetter {
                                     String content;
                                     for (int i = 0; i < videoNodes.size(); i++) {
                                         videoNode = videoNodes.get(i);
-                                        video = new HotVideo();
+                                        video = new Video();
                                         aNode = videoNode.getElementsByTag("a").first();
                                         video.url = aNode.attr("href");
                                         content = aNode.html();
@@ -137,7 +144,7 @@ public class HotVideoDataGetter {
                                     category.data = new ArrayList<>();
                                     for (int j = 0; j < videoNodes.size(); j++) {
                                         videoNode = videoNodes.get(j);
-                                        video = new HotVideo();
+                                        video = new Video();
                                         video.url = videoNode.getElementsByTag("a").first().attr("href");
                                         video.img = videoNode.getElementsByTag("img").first().attr("src");
                                         video.date = videoNode.getElementsByTag("span").first().text();

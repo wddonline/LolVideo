@@ -1,5 +1,6 @@
 package org.wdd.app.android.lolvideo.ui.category.fragment;
 
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -58,15 +59,21 @@ public class VideoCategoryFragment extends BaseFragment {
     @Override
     protected void lazyLoad() {
         View headerView;
+        View dividerView;
         List<HtmlHref> data;
         TagFlowLayout flowLayout;
+        LinearLayout.LayoutParams dlp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 1);
+        dlp.leftMargin = getResources().getDimensionPixelSize(R.dimen.activity_horizontal_margin);
+        dlp.rightMargin = dlp.leftMargin;
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-
         HttpDataCache cache = new HttpDataCache(getContext());
         headerView = mInflater.inflate(R.layout.item_hot_video_header, null, false);
         ((TextView)headerView.findViewById(R.id.item_hot_video_header_title)).setText(R.string.news);
         headerView.findViewById(R.id.item_hot_video_header_more).setVisibility(View.GONE);
         mContainer.addView(headerView, lp);
+        dividerView = new View(getContext());
+        dividerView.setBackgroundColor(Color.parseColor("#CCCCCC"));
+        mContainer.addView(dividerView, dlp);
         data = cache.getNews();
         if (data.size() > 0) {
             flowLayout = new TagFlowLayout(getContext());
@@ -78,6 +85,9 @@ public class VideoCategoryFragment extends BaseFragment {
         ((TextView)headerView.findViewById(R.id.item_hot_video_header_title)).setText(R.string.video_category);
         headerView.findViewById(R.id.item_hot_video_header_more).setVisibility(View.GONE);
         mContainer.addView(headerView, lp);
+        dividerView = new View(getContext());
+        dividerView.setBackgroundColor(Color.parseColor("#CCCCCC"));
+        mContainer.addView(dividerView, dlp);
         data = cache.getVideoCategories();
         if (data.size() > 0) {
             flowLayout = new TagFlowLayout(getContext());
@@ -89,6 +99,9 @@ public class VideoCategoryFragment extends BaseFragment {
         ((TextView)headerView.findViewById(R.id.item_hot_video_header_title)).setText(R.string.mumu_sole);
         headerView.findViewById(R.id.item_hot_video_header_more).setVisibility(View.GONE);
         mContainer.addView(headerView, lp);
+        dividerView = new View(getContext());
+        dividerView.setBackgroundColor(Color.parseColor("#CCCCCC"));
+        mContainer.addView(dividerView, dlp);
         data = cache.getMumuSoles();
         if (data.size() > 0) {
             flowLayout = new TagFlowLayout(getContext());
@@ -100,6 +113,9 @@ public class VideoCategoryFragment extends BaseFragment {
         ((TextView)headerView.findViewById(R.id.item_hot_video_header_title)).setText(R.string.commentary);
         headerView.findViewById(R.id.item_hot_video_header_more).setVisibility(View.GONE);
         mContainer.addView(headerView, lp);
+        dividerView = new View(getContext());
+        dividerView.setBackgroundColor(Color.parseColor("#CCCCCC"));
+        mContainer.addView(dividerView, dlp);
         data = cache.getCommentaries();
         if (data.size() > 0) {
             flowLayout = new TagFlowLayout(getContext());
@@ -111,6 +127,9 @@ public class VideoCategoryFragment extends BaseFragment {
         ((TextView)headerView.findViewById(R.id.item_hot_video_header_title)).setText(R.string.killer);
         headerView.findViewById(R.id.item_hot_video_header_more).setVisibility(View.GONE);
         mContainer.addView(headerView, lp);
+        dividerView = new View(getContext());
+        dividerView.setBackgroundColor(Color.parseColor("#CCCCCC"));
+        mContainer.addView(dividerView, dlp);
         data = cache.getKillers();
         if (data.size() > 0) {
             flowLayout = new TagFlowLayout(getContext());
@@ -122,6 +141,9 @@ public class VideoCategoryFragment extends BaseFragment {
         ((TextView)headerView.findViewById(R.id.item_hot_video_header_title)).setText(R.string.matches);
         headerView.findViewById(R.id.item_hot_video_header_more).setVisibility(View.GONE);
         mContainer.addView(headerView, lp);
+        dividerView = new View(getContext());
+        dividerView.setBackgroundColor(Color.parseColor("#CCCCCC"));
+        mContainer.addView(dividerView, dlp);
         data = cache.getMatches();
         if (data.size() > 0) {
             flowLayout = new TagFlowLayout(getContext());
@@ -133,6 +155,9 @@ public class VideoCategoryFragment extends BaseFragment {
         ((TextView)headerView.findViewById(R.id.item_hot_video_header_title)).setText(R.string.columns);
         headerView.findViewById(R.id.item_hot_video_header_more).setVisibility(View.GONE);
         mContainer.addView(headerView, lp);
+        dividerView = new View(getContext());
+        dividerView.setBackgroundColor(Color.parseColor("#CCCCCC"));
+        mContainer.addView(dividerView, dlp);
         data = cache.getColumns();
         if (data.size() > 0) {
             flowLayout = new TagFlowLayout(getContext());

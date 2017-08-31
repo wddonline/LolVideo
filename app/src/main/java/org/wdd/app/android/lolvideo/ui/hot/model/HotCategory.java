@@ -15,7 +15,7 @@ public class HotCategory {
     public String name;
     public String url;
     public HotType type;
-    public List<HotVideo> data;
+    public List<Video> data;
 
     public HotCategory() {
     }
