@@ -28,12 +28,12 @@ public class MatchMenuAdapter extends AbstractCommonAdapter<MatchMenuAdapter.Mat
 
     private OnMenuClickedListener mListener;
 
-    public MatchMenuAdapter(Context context, List<HtmlHref> menus) {
+    public MatchMenuAdapter(Context context, String homeUrl, String homeTitle, List<HtmlHref> menus) {
         super(context);
 
         HtmlHref href = new HtmlHref();
-        href.name = context.getString(R.string.all_videos);
-        href.url = "/bisai";
+        href.name = homeTitle;
+        href.url = homeUrl;
         menus.add(0, href);
 
         data = new ArrayList<>();

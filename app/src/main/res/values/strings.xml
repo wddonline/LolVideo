@@ -38,15 +38,12 @@
 
     <string name="category">分类</string>
     <string name="news">资讯</string>
-    <string name="video_category">视频分类</string>
-    <string name="mumu_sole">木木独家</string>
-    <string name="commentary">解说</string>
-    <string name="killer">高手</string>
-    <string name="matches">比赛</string>
-    <string name="columns">栏目</string>
+    <string name="hot_videos">热门视频</string>
+    <string name="hot_news">热门资讯</string>
 
     <!-- 比赛 -->
-    <string name="all_videos">全部视频</string>
+    <string name="matches">比赛</string>
+    <string name="hot_matches">热门比赛</string>
     <string name="filter">筛选</string>
 
     <string name="me">我的</string>

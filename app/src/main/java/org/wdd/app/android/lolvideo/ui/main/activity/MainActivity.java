@@ -2,9 +2,9 @@ package org.wdd.app.android.lolvideo.ui.main.activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.ActivityCompat;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TabWidget;
@@ -17,13 +17,11 @@ import org.wdd.app.android.lolvideo.app.LolApplication;
 import org.wdd.app.android.lolvideo.ui.base.BaseActivity;
 import org.wdd.app.android.lolvideo.ui.category.fragment.VideoCategoryFragment;
 import org.wdd.app.android.lolvideo.ui.hot.fragment.HotVideoFragment;
-import org.wdd.app.android.lolvideo.ui.main.presenter.MainPresenter;
 import org.wdd.app.android.lolvideo.ui.matches.fragment.MatchesFragment;
 import org.wdd.app.android.lolvideo.ui.me.fragment.MeFragment;
 import org.wdd.app.android.lolvideo.utils.AppToaster;
 import org.wdd.app.android.lolvideo.utils.AppUtils;
 import org.wdd.app.android.lolvideo.views.FragmentTabHost;
-import org.wdd.app.android.lolvideo.views.LoadView;
 
 public class MainActivity extends BaseActivity implements Runnable {
 
@@ -32,11 +30,9 @@ public class MainActivity extends BaseActivity implements Runnable {
         activity.startActivity(intent);
     }
 
-    private LoadView mLoadView;
     private FragmentTabHost mTabHost;
 
     private Handler handler = new Handler();
-    private MainPresenter mPresenter;
 
     private final long TIME_LIMIT = 3000;
     private int backPressedCount = 0;
@@ -47,26 +43,16 @@ public class MainActivity extends BaseActivity implements Runnable {
         setContentView(R.layout.activity_main);
         AppUtils.setImmersiveStatusBar(this);
         MobclickAgent.openActivityDurationTrack(false);
-        initData();
         initViews();
 //        BmobUtils.autoUpdateApp(this);
     }
 
-    private void initData() {
-        mPresenter = new MainPresenter(this);
-    }
+
 
     private void initViews() {
-        mLoadView = (LoadView) findViewById(R.id.activity_main_loadview);
         mTabHost = (FragmentTabHost) findViewById(android.R.id.tabhost);
         mTabHost.setup(this, getSupportFragmentManager(), android.R.id.tabcontent);
         mTabHost.getTabWidget().setDividerDrawable(null);
-
-        mPresenter.getLolVideoMenusData(host);
-    }
-
-    private void setMenuViews() {
-        mTabHost.setVisibility(View.VISIBLE);
 
         View tabLayout;
         ImageView tabImgView;
@@ -118,16 +104,4 @@ public class MainActivity extends BaseActivity implements Runnable {
         backPressedCount = 0;
     }
 
-    public void showVideoMenuView() {
-        mLoadView.setStatus(LoadView.LoadStatus.Normal);
-        setMenuViews();
-    }
-
-    public void showRequestErrorView(String error) {
-        mLoadView.setStatus(LoadView.LoadStatus.Request_Failure, error);
-    }
-
-    public void showNetworkErrorView() {
-        mLoadView.setStatus(LoadView.LoadStatus.Network_Error);
-    }
 }

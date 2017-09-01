@@ -18,21 +18,27 @@
         android:background="#ff6562"
         android:layout_marginRight="5dp"/>
 
-    <TextView
-        android:id="@+id/item_hot_video_normal_news_title"
+    <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:lines="2"
-        android:gravity="center_vertical"
-        android:ellipsize="end"
-        android:textSize="@dimen/textSizeItemContent"
-        android:textColor="#333333"/>
+        android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/item_hot_video_normal_news_date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:textSize="@dimen/textSizeItemExtra"/>
+        <TextView
+            android:id="@+id/item_hot_video_normal_news_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:textSize="@dimen/textSizeItemContent"
+            android:textColor="#333333"/>
+
+        <TextView
+            android:id="@+id/item_hot_video_normal_news_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:textSize="@dimen/textSizeItemExtra"/>
+
+    </LinearLayout>
+
 </LinearLayout>

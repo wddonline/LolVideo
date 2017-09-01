@@ -88,7 +88,7 @@ public class MatchesFragment extends BaseFragment {
                 return true;
             }
         });
-        mToolbar.setTitle(R.string.all_videos);
+        mToolbar.setTitle(R.string.hot_matches);
 
         mContentView = mRootView.findViewById(R.id.fragment_matches_content);
         mRefreshLayout = mRootView.findViewById(R.id.fragment_matches_refresh);
@@ -150,9 +150,8 @@ public class MatchesFragment extends BaseFragment {
             mMenuView.setVisibility(View.VISIBLE);
         }
         anim.setDuration(500);
-        anim.setFillAfter(true);
         anim.setInterpolator(new LinearInterpolator());
-        mMenuView.startAnimation(anim);
+        mMenuListView.startAnimation(anim);
     }
 
     @Override
@@ -167,6 +166,12 @@ public class MatchesFragment extends BaseFragment {
         if (mMenuAdapter != null) {
             menu.findItem(R.id.menu_filter).setVisible(true);
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mPresenter.cancelRequest();
     }
 
     public void showMatchVideoView(boolean isAppend, boolean isLastPage, List<HtmlHref> menus, List<Video> videos) {
@@ -184,12 +189,14 @@ public class MatchesFragment extends BaseFragment {
             });
 
             mContentView.setVisibility(View.VISIBLE);
-            mMenuAdapter = new MatchMenuAdapter(getContext(), menus);
+            mMenuAdapter = new MatchMenuAdapter(getContext(), "/bisai", getString(R.string.hot_matches), menus);
             mMenuAdapter.setOnMenuClickedListener(new MatchMenuAdapter.OnMenuClickedListener() {
                 @Override
                 public void onMenuClicked(HtmlHref href) {
                     mToolbar.setTitle(href.name);
                     mPresenter.getMatchVideosData(href.url, false, host);
+                    mRecyclerView.scrollToPosition(0);
+                    toggleMenu();
                 }
             });
             mMenuListView.setAdapter(mMenuAdapter);

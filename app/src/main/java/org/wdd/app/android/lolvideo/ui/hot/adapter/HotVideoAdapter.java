@@ -30,6 +30,7 @@ public class HotVideoAdapter extends AbstractCommonAdapter<HotVideoAdapter.HotIt
     private final int TYPE_VIDEO = 3;
 
     private LayoutInflater mInflater;
+    private OnHotVideoClickedListener mListener;
     private int mItemWidth;
     private int mItemHeight;
 
@@ -53,6 +54,7 @@ public class HotVideoAdapter extends AbstractCommonAdapter<HotVideoAdapter.HotIt
             if (cate.type == HotCategory.HotType.NEWS) {
                 item = new HotItem();
                 item.type = TYPE_HEADER;
+                item.isVideo = false;
                 item.data = new ArrayList<>();
                 video = new Video();
                 video.url = cate.url;
@@ -70,6 +72,7 @@ public class HotVideoAdapter extends AbstractCommonAdapter<HotVideoAdapter.HotIt
             } else {
                 item = new HotItem();
                 item.type = TYPE_HEADER;
+                item.isVideo = true;
                 item.data = new ArrayList<>();
                 video = new Video();
                 video.url = cate.url;
@@ -167,7 +170,12 @@ public class HotVideoAdapter extends AbstractCommonAdapter<HotVideoAdapter.HotIt
 
     class HotItem {
         int type;
+        boolean isVideo;
         List<Video> data;
+    }
+
+    public void setOnHotVideoClickedListener(OnHotVideoClickedListener listener) {
+        this.mListener = listener;
     }
 
     private class HeaderViewHolder extends RecyclerView.ViewHolder {
@@ -181,13 +189,14 @@ public class HotVideoAdapter extends AbstractCommonAdapter<HotVideoAdapter.HotIt
             clickView = itemView.findViewById(R.id.item_hot_video_header_more);
         }
 
-        public void bindData(HotItem item) {
+        public void bindData(final HotItem item) {
             final Video video = item.data.get(0);
             titleView.setText(video.title);
             clickView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
+                    if (mListener == null) return;
+                    mListener.onMoreVideoClicked(item.isVideo, video);
                 }
             });
         }
@@ -217,7 +226,7 @@ public class HotVideoAdapter extends AbstractCommonAdapter<HotVideoAdapter.HotIt
             clickView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
+                    if (mListener == null) return;
                 }
             });
         }
@@ -244,7 +253,7 @@ public class HotVideoAdapter extends AbstractCommonAdapter<HotVideoAdapter.HotIt
             clickView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
+                    if (mListener == null) return;
                 }
             });
         }
@@ -279,29 +288,29 @@ public class HotVideoAdapter extends AbstractCommonAdapter<HotVideoAdapter.HotIt
         public void bindData(HotItem item) {
             List<Video> items = item.data;
 
-            Video video = item.data.get(0);
-            imageViews[0].setImageUrl(video.img);
-            titleViews[0].setText(video.title);
-            dateViews[0].setText(video.date);
+            final Video video1 = item.data.get(0);
+            imageViews[0].setImageUrl(video1.img);
+            titleViews[0].setText(video1.title);
+            dateViews[0].setText(video1.date);
             clickViews[0].setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
+                    if (mListener == null) return;
                 }
             });
             imageViews[0].getLayoutParams().width = mItemWidth;
             imageViews[0].getLayoutParams().height = mItemHeight;
 
             if (items.size() > 1) {
-                video = item.data.get(1);
+                final Video video2 = item.data.get(1);
                 clickViews[1].setVisibility(View.VISIBLE);
-                imageViews[1].setImageUrl(video.img);
-                titleViews[1].setText(video.title);
-                dateViews[1].setText(video.date);
+                imageViews[1].setImageUrl(video2.img);
+                titleViews[1].setText(video2.title);
+                dateViews[1].setText(video2.date);
                 clickViews[1].setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-
+                        if (mListener == null) return;
                     }
                 });
                 imageViews[1].getLayoutParams().width = mItemWidth;
@@ -310,6 +319,13 @@ public class HotVideoAdapter extends AbstractCommonAdapter<HotVideoAdapter.HotIt
                 clickViews[1].setVisibility(View.GONE);
             }
         }
+
+    }
+
+    public interface OnHotVideoClickedListener {
+
+        void onMoreVideoClicked(boolean isVideo, Video video);
+        void onHotVideoClicked(boolean isVideo, Video video);
 
     }
 }

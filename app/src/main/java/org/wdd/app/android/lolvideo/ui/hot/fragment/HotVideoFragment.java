@@ -13,8 +13,12 @@ import android.view.ViewGroup;
 import org.wdd.app.android.lolvideo.R;
 import org.wdd.app.android.lolvideo.ui.base.AbstractCommonAdapter;
 import org.wdd.app.android.lolvideo.ui.base.BaseFragment;
+import org.wdd.app.android.lolvideo.ui.category.activity.NewsListActivity;
+import org.wdd.app.android.lolvideo.ui.category.activity.VideoListActivity;
+import org.wdd.app.android.lolvideo.ui.detail.activity.VideoDetailActivity;
 import org.wdd.app.android.lolvideo.ui.hot.adapter.HotVideoAdapter;
 import org.wdd.app.android.lolvideo.ui.hot.model.HotCategory;
+import org.wdd.app.android.lolvideo.ui.hot.model.Video;
 import org.wdd.app.android.lolvideo.ui.hot.presenter.HotVideoPresenter;
 import org.wdd.app.android.lolvideo.utils.AppToaster;
 import org.wdd.app.android.lolvideo.utils.AppUtils;
@@ -89,6 +93,12 @@ public class HotVideoFragment extends BaseFragment {
         mPresenter.getHotVideoData(host);
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mPresenter.cancelRequest();
+    }
+
     public void showHotVideoView(List<HotCategory> cates) {
         if (mAdapter == null) {
             mLoadView.setStatus(LoadView.LoadStatus.Normal);
@@ -98,6 +108,22 @@ public class HotVideoFragment extends BaseFragment {
             mAdapter.refreshData(cates);
             mRecyclerView.setAdapter(mAdapter);
             mAdapter.setLoadStatus(AbstractCommonAdapter.LoadStatus.NoMore);
+            mAdapter.setOnHotVideoClickedListener(new HotVideoAdapter.OnHotVideoClickedListener() {
+                @Override
+                public void onMoreVideoClicked(boolean isVideo, Video video) {
+                    if (isVideo) {
+                        VideoListActivity.show(getActivity(), video.url);
+                    } else {
+                        NewsListActivity.show(getActivity(), video.url);
+                    }
+                }
+
+                @Override
+                public void onHotVideoClicked(boolean isVideo, Video video) {
+                    VideoDetailActivity.show(getActivity(), video.title, video.url);
+                }
+
+            });
         } else {
             mRefreshLayout.setRefreshing(false);
             mAdapter.refreshData(cates);
